@@ -6,8 +6,8 @@
   "dns": {
     "servers": [
       {
-        "tag": "google",
-        "address": "8.8.8.8"
+        "tag": "remote",
+        "address": "udp://8.8.8.8"
       },
       {
         "tag": "local",
@@ -30,18 +30,6 @@
       "listen_port": 1080,
       "sniff": true,
       "sniff_override_destination": true
-    },
-    {
-      "type": "tun",
-      "tag": "tun-in",
-      "interface_name": "wisp",
-      "mtu": 9000,
-      "auto_route": true,
-      "strict_route": true,
-      "stack": "system",
-      "endpoint_independent_nat": false,
-      "sniff": true,
-      "sniff_override_destination": true
     }
   ],
   "outbounds": [
@@ -51,20 +39,19 @@
       "server": "64.188.104.120",
       "server_port": 23696,
       "uuid": "69559e05-d5a1-48ef-b996-c2f31c839350",
-      "flow": "",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
         "server_name": "google.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "firefox"
+        },
         "reality": {
           "enabled": true,
           "public_key": "uYJf3PxmMBVWN9X4FBwzkf8PirONsBSgl47uPBL_mBc",
           "short_id": "bf",
           "spider_x": "/"
-        },
-        "utls": {
-          "enabled": true,
-          "fingerprint": "firefox"
         }
       },
       "transport": {
@@ -74,10 +61,6 @@
     {
       "type": "direct",
       "tag": "direct"
-    },
-    {
-      "type": "block",
-      "tag": "block"
     }
   ],
   "route": {
@@ -85,15 +68,6 @@
       {
         "inbound": "socks-in",
         "outbound": "proxy"
-      },
-      {
-        "inbound": "tun-in",
-        "outbound": "proxy"
-      },
-      {
-        "network": "udp",
-        "port": 53,
-        "outbound": "direct"
       }
     ],
     "final": "proxy",
